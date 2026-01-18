@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jimOS</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- 引入 FontAwesome 用於圖示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- 1. 開機畫面 (Boot Screen) -->
+    <div id="boot-screen">
+        <div class="apple-logo"><i class="fab fa-apple"></i></div>
+        <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+        </div>
+        <div class="boot-text">Welcome to jimOS</div>
+    </div>
+
+    <!-- 2. 首次設定精靈 (Setup Assistant) -->
+    <div id="setup-assistant" class="hidden">
+        <div class="setup-window glass">
+            <h2>Welcome to jimOS</h2>
+            <p>讓我們開始設定您的模擬體驗</p>
+            
+            <div class="step" data-step="1">
+                <label>選擇語言 / Language</label>
+                <div class="options">
+                    <button class="btn active" onclick="setup.setLang('zh-TW')">繁體中文</button>
+                    <button class="btn" onclick="setup.setLang('en-US')">English</button>
+                    <button class="btn" onclick="setup.setLang('ja-JP')">日本語</button>
+                </div>
+            </div>
+
+            <div class="step" data-step="2">
+                <label>您的名字</label>
+                <input type="text" id="setup-username" value="Jim" placeholder="Enter name">
+            </div>
+
+            <button class="primary-btn" onclick="setup.finish()">開始使用 jimOS</button>
+        </div>
+    </div>
+
+    <!-- 3. 桌面環境 (Desktop) -->
+    <div id="desktop" class="hidden">
+        
+        <!-- 背景桌布 -->
+        <div id="wallpaper"></div>
+
+        <!-- 上方選單 (Menu Bar) -->
+        <div id="menubar" class="glass-bar">
+            <div class="left-menu">
+                <span class="apple-icon"><i class="fab fa-apple"></i></span>
+                <span id="active-app-name" class="bold">jimOS</span>
+                <span class="menu-item">檔案</span>
+                <span class="menu-item">編輯</span>
+                <span class="menu-item">檢視</span>
+            </div>
+            <div class="right-menu">
+                <span class="status-icon"><i class="fas fa-wifi"></i></span>
+                <span class="status-icon"><i class="fas fa-battery-three-quarters"></i> 86%</span>
+                <span class="status-icon"><i class="fas fa-volume-up"></i></span>
+                <span id="clock">10:41 AM</span>
+            </div>
+        </div>
+
+        <!-- 桌面圖示區域 -->
+        <div id="desktop-icons">
+            <!-- 動態生成 -->
+        </div>
+
+        <!-- 視窗容器 -->
+        <div id="window-area">
+            <!-- 視窗將由 JS 動態插入這裡 -->
+        </div>
+
+        <!-- 下方 Dock -->
+        <div id="dock-container">
+            <div class="dock glass">
+                <div class="dock-item" onclick="apps.open('finder')" title="Finder">
+                    <div class="icon finder-icon"><i class="fas fa-face-smile"></i></div>
+                    <div class="dot hidden"></div>
+                </div>
+                <div class="dock-item" onclick="apps.open('safari')" title="Safari">
+                    <div class="icon safari-icon"><i class="fas fa-compass"></i></div>
+                    <div class="dot hidden"></div>
+                </div>
+                <div class="dock-item" onclick="apps.open('terminal')" title="Terminal">
+                    <div class="icon terminal-icon"><i class="fas fa-terminal"></i></div>
+                    <div class="dot hidden"></div>
+                </div>
+                <div class="dock-item" onclick="apps.open('editor')" title="Notes">
+                    <div class="icon editor-icon"><i class="fas fa-sticky-note"></i></div>
+                    <div class="dot hidden"></div>
+                </div>
+                <div class="dock-item" onclick="apps.open('photos')" title="Photos">
+                    <div class="icon photos-icon"><i class="fas fa-images"></i></div>
+                    <div class="dot hidden"></div>
+                </div>
+                 <div class="dock-item" onclick="apps.open('music')" title="Music">
+                    <div class="icon music-icon"><i class="fas fa-music"></i></div>
+                    <div class="dot hidden"></div>
+                </div>
+                <div class="dock-item" onclick="apps.open('calculator')" title="Calculator">
+                    <div class="icon calc-icon"><i class="fas fa-calculator"></i></div>
+                    <div class="dot hidden"></div>
+                </div>
+                <div class="dock-item" onclick="apps.open('settings')" title="Settings">
+                    <div class="icon settings-icon"><i class="fas fa-cog"></i></div>
+                    <div class="dot hidden"></div>
+                </div>
+                <div class="separator"></div>
+                <div class="dock-item" onclick="apps.open('trash')" title="Trash">
+                    <div class="icon trash-icon"><i class="fas fa-trash"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 右鍵選單 (Context Menu) -->
+    <div id="context-menu" class="glass hidden">
+        <div class="item" onclick="os.createFile('new_folder')">新增資料夾</div>
+        <div class="item" onclick="os.createFile('new_text')">新增文字檔</div>
+        <div class="separator"></div>
+        <div class="item" onclick="location.reload()">重新整理</div>
+        <div class="item" onclick="os.changeWallpaper()">更換桌布</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
